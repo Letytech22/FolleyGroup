@@ -298,13 +298,19 @@ export const divisions: Division[] = [
   },
 ];
 
-function divisionHref(slug: Division["slug"]) {
+function divisionHref(slug: Division["slug"]):
+  | "/businesses/mobility-travel"
+  | "/businesses/property-hospitality"
+  | "/businesses/technology-telecoms"
+  | "/businesses/trade-commerce"
+  | "/businesses/logistics-partnerships" {
   switch (slug) {
     case "mobility-travel": return "/businesses/mobility-travel";
     case "property-hospitality": return "/businesses/property-hospitality";
     case "technology-telecoms": return "/businesses/technology-telecoms";
     case "trade-commerce": return "/businesses/trade-commerce";
     case "logistics-partnerships": return "/businesses/logistics-partnerships";
+    default: return "/businesses";
   }
 }
 
