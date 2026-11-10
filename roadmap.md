@@ -1,0 +1,3 @@
+- [x] Build the bilingual Folley Group site shell and responsive home, business, brand, about, partnership, and contact pages.
+- [x] Add five dedicated business division pages with enquiry links.
+- [x] Verify route rendering, contact form fields, and responsive navigation; resolve build issues.

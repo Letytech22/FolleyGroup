@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project architecture
+
+- Keep the shared bilingual site shell and reusable Folley Group page sections in `src/components/folley-site.tsx`; use TanStack file-based routes with page-specific metadata for all public pages.

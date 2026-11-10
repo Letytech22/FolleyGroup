@@ -10,33 +10,171 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BrandsRouteImport } from './routes/brands'
+import { Route as BusinessesRouteImport } from './routes/businesses'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PartnershipsRouteImport } from './routes/partnerships'
+import { Route as BusinessesLogisticsPartnershipsRouteImport } from './routes/businesses_.logistics-partnerships'
+import { Route as BusinessesMobilityTravelRouteImport } from './routes/businesses_.mobility-travel'
+import { Route as BusinessesPropertyHospitalityRouteImport } from './routes/businesses_.property-hospitality'
+import { Route as BusinessesTechnologyTelecomsRouteImport } from './routes/businesses_.technology-telecoms'
+import { Route as BusinessesTradeCommerceRouteImport } from './routes/businesses_.trade-commerce'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsRoute = BrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessesRoute = BusinessesRouteImport.update({
+  id: '/businesses',
+  path: '/businesses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnershipsRoute = PartnershipsRouteImport.update({
+  id: '/partnerships',
+  path: '/partnerships',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessesLogisticsPartnershipsRoute =
+  BusinessesLogisticsPartnershipsRouteImport.update({
+    id: '/businesses_/logistics-partnerships',
+    path: '/businesses/logistics-partnerships',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BusinessesMobilityTravelRoute =
+  BusinessesMobilityTravelRouteImport.update({
+    id: '/businesses_/mobility-travel',
+    path: '/businesses/mobility-travel',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BusinessesPropertyHospitalityRoute =
+  BusinessesPropertyHospitalityRouteImport.update({
+    id: '/businesses_/property-hospitality',
+    path: '/businesses/property-hospitality',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BusinessesTechnologyTelecomsRoute =
+  BusinessesTechnologyTelecomsRouteImport.update({
+    id: '/businesses_/technology-telecoms',
+    path: '/businesses/technology-telecoms',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BusinessesTradeCommerceRoute = BusinessesTradeCommerceRouteImport.update({
+  id: '/businesses_/trade-commerce',
+  path: '/businesses/trade-commerce',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRoute
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRoute
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRoute
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses_/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses_/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses_/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses_/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses_/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses/logistics-partnerships'
+    | '/businesses/mobility-travel'
+    | '/businesses/property-hospitality'
+    | '/businesses/technology-telecoms'
+    | '/businesses/trade-commerce'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses/logistics-partnerships'
+    | '/businesses/mobility-travel'
+    | '/businesses/property-hospitality'
+    | '/businesses/technology-telecoms'
+    | '/businesses/trade-commerce'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses_/logistics-partnerships'
+    | '/businesses_/mobility-travel'
+    | '/businesses_/property-hospitality'
+    | '/businesses_/technology-telecoms'
+    | '/businesses_/trade-commerce'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BrandsRoute: typeof BrandsRoute
+  BusinessesRoute: typeof BusinessesRoute
+  ContactRoute: typeof ContactRoute
+  PartnershipsRoute: typeof PartnershipsRoute
+  BusinessesLogisticsPartnershipsRoute: typeof BusinessesLogisticsPartnershipsRoute
+  BusinessesMobilityTravelRoute: typeof BusinessesMobilityTravelRoute
+  BusinessesPropertyHospitalityRoute: typeof BusinessesPropertyHospitalityRoute
+  BusinessesTechnologyTelecomsRoute: typeof BusinessesTechnologyTelecomsRoute
+  BusinessesTradeCommerceRoute: typeof BusinessesTradeCommerceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +186,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands': {
+      id: '/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof BrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses': {
+      id: '/businesses'
+      path: '/businesses'
+      fullPath: '/businesses'
+      preLoaderRoute: typeof BusinessesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partnerships': {
+      id: '/partnerships'
+      path: '/partnerships'
+      fullPath: '/partnerships'
+      preLoaderRoute: typeof PartnershipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses_/logistics-partnerships': {
+      id: '/businesses_/logistics-partnerships'
+      path: '/businesses/logistics-partnerships'
+      fullPath: '/businesses/logistics-partnerships'
+      preLoaderRoute: typeof BusinessesLogisticsPartnershipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses_/mobility-travel': {
+      id: '/businesses_/mobility-travel'
+      path: '/businesses/mobility-travel'
+      fullPath: '/businesses/mobility-travel'
+      preLoaderRoute: typeof BusinessesMobilityTravelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses_/property-hospitality': {
+      id: '/businesses_/property-hospitality'
+      path: '/businesses/property-hospitality'
+      fullPath: '/businesses/property-hospitality'
+      preLoaderRoute: typeof BusinessesPropertyHospitalityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses_/technology-telecoms': {
+      id: '/businesses_/technology-telecoms'
+      path: '/businesses/technology-telecoms'
+      fullPath: '/businesses/technology-telecoms'
+      preLoaderRoute: typeof BusinessesTechnologyTelecomsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses_/trade-commerce': {
+      id: '/businesses_/trade-commerce'
+      path: '/businesses/trade-commerce'
+      fullPath: '/businesses/trade-commerce'
+      preLoaderRoute: typeof BusinessesTradeCommerceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BrandsRoute: BrandsRoute,
+  BusinessesRoute: BusinessesRoute,
+  ContactRoute: ContactRoute,
+  PartnershipsRoute: PartnershipsRoute,
+  BusinessesLogisticsPartnershipsRoute: BusinessesLogisticsPartnershipsRoute,
+  BusinessesMobilityTravelRoute: BusinessesMobilityTravelRoute,
+  BusinessesPropertyHospitalityRoute: BusinessesPropertyHospitalityRoute,
+  BusinessesTechnologyTelecomsRoute: BusinessesTechnologyTelecomsRoute,
+  BusinessesTradeCommerceRoute: BusinessesTradeCommerceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
