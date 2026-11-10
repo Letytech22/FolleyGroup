@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type FormEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowDownRight,
@@ -541,7 +541,7 @@ export function ContactPage() {
   const services = language === "fr"
     ? ["Mobilité & voyages", "Immobilier & hôtellerie", "Technologie & télécoms", "Commerce & échanges", "Logistique & partenariats", "Partenariat d’affaires", "Folley Collection", "Folley Tech", "Demande générale"]
     : ["Mobility & Travel", "Property & Hospitality", "Technology & Telecoms", "Trade & Commerce", "Logistics & Partnerships", "Business Partnership", "Folley Collection", "Folley Tech", "General Enquiry"];
-  function sendMessage(event: React.FormEvent<HTMLFormElement>) {
+  function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const subject = `${String(form.get("service"))} enquiry — ${String(form.get("name"))}`;
