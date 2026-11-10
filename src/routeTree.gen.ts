@@ -10,33 +10,166 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BrandsRouteImport } from './routes/brands'
+import { Route as BusinessesRouteImport } from './routes/businesses'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as PartnershipsRouteImport } from './routes/partnerships'
+import { Route as BusinessesLogisticsPartnershipsRouteImport } from './routes/businesses.logistics-partnerships'
+import { Route as BusinessesMobilityTravelRouteImport } from './routes/businesses.mobility-travel'
+import { Route as BusinessesPropertyHospitalityRouteImport } from './routes/businesses.property-hospitality'
+import { Route as BusinessesTechnologyTelecomsRouteImport } from './routes/businesses.technology-telecoms'
+import { Route as BusinessesTradeCommerceRouteImport } from './routes/businesses.trade-commerce'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsRoute = BrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessesRoute = BusinessesRouteImport.update({
+  id: '/businesses',
+  path: '/businesses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnershipsRoute = PartnershipsRouteImport.update({
+  id: '/partnerships',
+  path: '/partnerships',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessesLogisticsPartnershipsRoute =
+  BusinessesLogisticsPartnershipsRouteImport.update({
+    id: '/logistics-partnerships',
+    path: '/logistics-partnerships',
+    getParentRoute: () => BusinessesRoute,
+  } as any)
+const BusinessesMobilityTravelRoute =
+  BusinessesMobilityTravelRouteImport.update({
+    id: '/mobility-travel',
+    path: '/mobility-travel',
+    getParentRoute: () => BusinessesRoute,
+  } as any)
+const BusinessesPropertyHospitalityRoute =
+  BusinessesPropertyHospitalityRouteImport.update({
+    id: '/property-hospitality',
+    path: '/property-hospitality',
+    getParentRoute: () => BusinessesRoute,
+  } as any)
+const BusinessesTechnologyTelecomsRoute =
+  BusinessesTechnologyTelecomsRouteImport.update({
+    id: '/technology-telecoms',
+    path: '/technology-telecoms',
+    getParentRoute: () => BusinessesRoute,
+  } as any)
+const BusinessesTradeCommerceRoute = BusinessesTradeCommerceRouteImport.update({
+  id: '/trade-commerce',
+  path: '/trade-commerce',
+  getParentRoute: () => BusinessesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/brands': typeof BrandsRoute
+  '/businesses': typeof BusinessesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/partnerships': typeof PartnershipsRoute
+  '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
+  '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
+  '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
+  '/businesses/technology-telecoms': typeof BusinessesTechnologyTelecomsRoute
+  '/businesses/trade-commerce': typeof BusinessesTradeCommerceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses/logistics-partnerships'
+    | '/businesses/mobility-travel'
+    | '/businesses/property-hospitality'
+    | '/businesses/technology-telecoms'
+    | '/businesses/trade-commerce'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses/logistics-partnerships'
+    | '/businesses/mobility-travel'
+    | '/businesses/property-hospitality'
+    | '/businesses/technology-telecoms'
+    | '/businesses/trade-commerce'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/brands'
+    | '/businesses'
+    | '/contact'
+    | '/partnerships'
+    | '/businesses/logistics-partnerships'
+    | '/businesses/mobility-travel'
+    | '/businesses/property-hospitality'
+    | '/businesses/technology-telecoms'
+    | '/businesses/trade-commerce'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BrandsRoute: typeof BrandsRoute
+  BusinessesRoute: typeof BusinessesRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  PartnershipsRoute: typeof PartnershipsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +181,106 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands': {
+      id: '/brands'
+      path: '/brands'
+      fullPath: '/brands'
+      preLoaderRoute: typeof BrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses': {
+      id: '/businesses'
+      path: '/businesses'
+      fullPath: '/businesses'
+      preLoaderRoute: typeof BusinessesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partnerships': {
+      id: '/partnerships'
+      path: '/partnerships'
+      fullPath: '/partnerships'
+      preLoaderRoute: typeof PartnershipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/businesses/logistics-partnerships': {
+      id: '/businesses/logistics-partnerships'
+      path: '/logistics-partnerships'
+      fullPath: '/businesses/logistics-partnerships'
+      preLoaderRoute: typeof BusinessesLogisticsPartnershipsRouteImport
+      parentRoute: typeof BusinessesRoute
+    }
+    '/businesses/mobility-travel': {
+      id: '/businesses/mobility-travel'
+      path: '/mobility-travel'
+      fullPath: '/businesses/mobility-travel'
+      preLoaderRoute: typeof BusinessesMobilityTravelRouteImport
+      parentRoute: typeof BusinessesRoute
+    }
+    '/businesses/property-hospitality': {
+      id: '/businesses/property-hospitality'
+      path: '/property-hospitality'
+      fullPath: '/businesses/property-hospitality'
+      preLoaderRoute: typeof BusinessesPropertyHospitalityRouteImport
+      parentRoute: typeof BusinessesRoute
+    }
+    '/businesses/technology-telecoms': {
+      id: '/businesses/technology-telecoms'
+      path: '/technology-telecoms'
+      fullPath: '/businesses/technology-telecoms'
+      preLoaderRoute: typeof BusinessesTechnologyTelecomsRouteImport
+      parentRoute: typeof BusinessesRoute
+    }
+    '/businesses/trade-commerce': {
+      id: '/businesses/trade-commerce'
+      path: '/trade-commerce'
+      fullPath: '/businesses/trade-commerce'
+      preLoaderRoute: typeof BusinessesTradeCommerceRouteImport
+      parentRoute: typeof BusinessesRoute
+    }
   }
 }
 
+interface BusinessesRouteChildren {
+  BusinessesLogisticsPartnershipsRoute: typeof BusinessesLogisticsPartnershipsRoute
+  BusinessesMobilityTravelRoute: typeof BusinessesMobilityTravelRoute
+  BusinessesPropertyHospitalityRoute: typeof BusinessesPropertyHospitalityRoute
+  BusinessesTechnologyTelecomsRoute: typeof BusinessesTechnologyTelecomsRoute
+  BusinessesTradeCommerceRoute: typeof BusinessesTradeCommerceRoute
+}
+
+const BusinessesRouteChildren: BusinessesRouteChildren = {
+  BusinessesLogisticsPartnershipsRoute: BusinessesLogisticsPartnershipsRoute,
+  BusinessesMobilityTravelRoute: BusinessesMobilityTravelRoute,
+  BusinessesPropertyHospitalityRoute: BusinessesPropertyHospitalityRoute,
+  BusinessesTechnologyTelecomsRoute: BusinessesTechnologyTelecomsRoute,
+  BusinessesTradeCommerceRoute: BusinessesTradeCommerceRoute,
+}
+
+const BusinessesRouteWithChildren = BusinessesRoute._addFileChildren(
+  BusinessesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BrandsRoute: BrandsRoute,
+  BusinessesRoute: BusinessesRouteWithChildren,
+  ContactRoute: ContactRoute,
+  PartnershipsRoute: PartnershipsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
