@@ -299,6 +299,7 @@ export const divisions: Division[] = [
 ];
 
 function divisionHref(slug: Division["slug"]):
+  | "/businesses"
   | "/businesses/mobility-travel"
   | "/businesses/property-hospitality"
   | "/businesses/technology-telecoms"
