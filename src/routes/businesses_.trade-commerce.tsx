@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BusinessPage } from "@/components/folley-site";
 
-export const Route = createFileRoute("/businesses/trade-commerce")({
+export const Route = createFileRoute("/businesses_/trade-commerce")({
   head: () => ({ meta: [
     { title: "Trade & Commerce | Folley Group" },
     { name: "description", content: "General trade, regional business sales and transfers, commercial opportunities and connections." },

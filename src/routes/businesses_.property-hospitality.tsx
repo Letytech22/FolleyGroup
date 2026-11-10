@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BusinessPage } from "@/components/folley-site";
 
-export const Route = createFileRoute("/businesses/property-hospitality")({
+export const Route = createFileRoute("/businesses_/property-hospitality")({
   head: () => ({ meta: [
     { title: "Property & Hospitality | Folley Group" },
     { name: "description", content: "Real estate, housing search, accommodation assistance and hotel services through Folley Group." },
