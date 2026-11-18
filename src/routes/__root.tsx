@@ -8,11 +8,10 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
-import { FolleySiteShell } from "@/components/folley-site";
+import { FolleySiteShell } from "@/components/folley/layout/FolleySiteShell";
 
 function NotFoundComponent() {
   return (
@@ -39,9 +38,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -80,16 +77,59 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     // Each content route, / included, must still set its own head(). Never add og:image or
     // twitter:image here: every page without its own would inherit the root's preview image.
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Folley Group | Regional Business Solutions" },
-      { name: "description", content: "Connecting people, business and opportunities across the Great Lakes region." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Folley Group | Regional Business Solutions" },
-      { property: "og:description", content: "Connecting people, business and opportunities across the Great Lakes region." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+    
+      {
+        title: "Folley Group | Business Services in Goma, DR Congo",
+      },
+      {
+        name: "description",
+        content:
+          "Folley Group provides transport and tourism, real estate and hospitality, telecoms and IT, general trade, logistics and subcontracting services.",
+      },
+    
+      {
+        name: "robots",
+        content: "index, follow",
+      },
+    
+      {
+        property: "og:title",
+        content: "Folley Group | Business Services in Goma, DR Congo",
+      },
+      {
+        property: "og:description",
+        content:
+          "Explore Folley Group services across transport and tourism, real estate and hospitality, telecoms and IT, general trade, logistics and subcontracting.",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        property: "og:locale",
+        content: "en_US",
+      },
+    
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+      {
+        name: "twitter:title",
+        content: "Folley Group | Business Services in Goma, DR Congo",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Explore Folley Group services in transport, tourism, real estate, hospitality, technology, trade, logistics and subcontracting.",
+      },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

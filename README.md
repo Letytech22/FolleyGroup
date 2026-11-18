@@ -1,64 +1,195 @@
-# Business Showcase
+# Folley Group Website
 
-Build the website using:
+Official corporate website for **Folley Group**, a diversified business group operating across multiple sectors including mobility, travel, property, hospitality, technology, telecommunications, trade, logistics, fashion, and business partnerships.
 
-React
+The website acts as the central digital platform for Folley Group, allowing visitors to explore the different business divisions, discover associated brands, and contact the company based on the service they require.
 
-TypeScript
+## Website Purpose
 
-Vite
+The Folley Group website is designed to:
 
-Tailwind CSS
+- Present Folley Group as one unified corporate brand
+- Organize its different businesses and services clearly
+- Allow customers to choose the service they are interested in
+- Connect visitors to existing Folley Group brands and online stores
+- Support business and contractor partnership enquiries
+- Provide direct contact through WhatsApp and other communication channels
+- Support future expansion as additional businesses are introduced
 
-shadcn/ui for reusable interface components
+## Business Divisions
 
-Lucide React for icons
+The website currently presents Folley Group's activities under the following divisions:
 
-React Router or the existing project routing system
+### Mobility & Travel
 
-Framer Motion only for subtle professional animations where appropriate
+- Vehicle rental
+- Passenger transportation
+- Goods transportation
+- Mail transportation
+- Airport facilitation
+- Travel ticket assistance
+- Tourism services
 
-Use a clean component-based architecture.
+### Property & Hospitality
 
-Create reusable components for:
+- Real estate services
+- Housing search
+- Accommodation assistance
+- Hotel services
 
-Header
+### Technology & Telecoms
 
-Navigation
+- Mobile services
+- Internet services
+- Network solutions
+- Computer services
+- Technical maintenance
+- IT support
 
-Footer
+### Trade & Commerce
 
-Hero sections
+- General trade
+- Commercial opportunities
+- Business sale and transfer services
+- Regional business connections
 
-Business division cards
+### Logistics & Partnerships
 
-Brand cards
+- Logistics
+- Subcontracting
+- Contractor partnerships
+- Strategic business partnerships
 
-Service cards
+## Folley Group Brands
 
-CTA sections
+The website also connects visitors to existing Folley Group businesses, including:
 
-Contact forms
+- **Folley Collection**
+- **Folley Tech**
+- **Folley J.C.**
 
-Social media links
+The architecture allows additional Folley Group businesses and brands to be added in the future.
 
-This project was built with [Lovable](https://lovable.dev).
+## Technology Stack
 
-## Build with Lovable
+This project is built using:
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/40a8decb-3a75-40ee-8f46-777b711e34f6).
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- Lucide React
+- React Router
+- Framer Motion for selected animations
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+The application follows a reusable component-based architecture to make future updates and expansion easier.
+
+## Main Components
+
+Reusable components include:
+
+- Header
+- Navigation
+- Footer
+- Hero sections
+- Business division cards
+- Brand cards
+- Service cards
+- Call-to-action sections
+- Contact sections
+- Social media links
+- WhatsApp integration
+
+## Project Structure
+
+The website includes sections and routes for:
+
+- Home
+- About Folley Group
+- Business Divisions
+- Folley Group Brands
+- Partnerships
+- Contact
+
+Individual business divisions can also have dedicated pages to provide more detailed information.
+
+## Getting Started
+
+### Requirements
+
+Install:
+
+- Node.js
+- npm
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Letytech22/FolleyGroup.git
+cd FolleyGroup
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Start the Development Server
+
+```bash
+npm run dev
+```
+
+The application will then be available through the local development URL provided by Vite.
+
+## Production Build
+
+Create a production build using:
+
+```bash
+npm run build
+```
+
+Preview the production build locally using:
+
+```bash
+npm run preview
+```
+
+## Responsive Design
+
+The website is designed to work across:
+
+- Desktop
+- Tablet
+- Mobile devices
+
+## Future Development
+
+The current version focuses on the Folley Group corporate presence and service discovery.
+
+Potential future enhancements may include:
+
+- Content management
+- Admin dashboard
+- Customer enquiry management
+- Online booking
+- E-commerce integrations
+- Payment processing
+- Additional business divisions
+- Additional language support
+- Business management features
+
+These features can be introduced separately as the Folley Group platform grows.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Designed and developed by **Lety Tech Consultancy**.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+
+
+---
+
+© 2026 Folley Group. All Rights Reserved.

@@ -191,3 +191,144 @@
     color: var(--color-foreground);
   }
 }
+
+
+/* Folley Group Preloader */
+
+.folley-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #07100d;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+.folley-preloader--leaving {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.folley-preloader__content {
+  width: min(320px, 72vw);
+  text-align: center;
+}
+
+.folley-preloader__mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.folley-preloader__folley {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  animation: folleyReveal 0.7s ease both;
+}
+
+.folley-preloader__group {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  color: rgba(255, 255, 255, 0.55);
+  animation: folleyReveal 0.7s ease 0.15s both;
+}
+
+.folley-preloader__track {
+  position: relative;
+  height: 1px;
+  margin-top: 2rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.folley-preloader__line {
+  position: absolute;
+  inset: 0;
+  background: #14955f;
+  transform: translateX(-100%);
+  animation: folleyLoading 1.1s cubic-bezier(0.65, 0, 0.35, 1)
+    forwards;
+}
+
+@keyframes folleyLoading {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  55% {
+    transform: translateX(-35%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes folleyReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folley-preloader__folley,
+  .folley-preloader__group,
+  .folley-preloader__line {
+    animation: none;
+  }
+
+  .folley-preloader {
+    transition: none;
+  }
+}
+
+
+/* Scroll reveal */
+
+.folley-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.folley-reveal--up {
+  transform: translateY(28px);
+}
+
+.folley-reveal--left {
+  transform: translateX(-40px);
+}
+
+.folley-reveal--right {
+  transform: translateX(40px);
+}
+
+.folley-reveal--visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folley-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

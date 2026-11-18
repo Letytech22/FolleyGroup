@@ -15,6 +15,7 @@ import { Route as BrandsRouteImport } from './routes/brands'
 import { Route as BusinessesRouteImport } from './routes/businesses'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PartnershipsRouteImport } from './routes/partnerships'
+import { Route as ApiSendContactRouteImport } from './routes/api/send-contact'
 import { Route as BusinessesLogisticsPartnershipsRouteImport } from './routes/businesses_.logistics-partnerships'
 import { Route as BusinessesMobilityTravelRouteImport } from './routes/businesses_.mobility-travel'
 import { Route as BusinessesPropertyHospitalityRouteImport } from './routes/businesses_.property-hospitality'
@@ -49,6 +50,11 @@ const ContactRoute = ContactRouteImport.update({
 const PartnershipsRoute = PartnershipsRouteImport.update({
   id: '/partnerships',
   path: '/partnerships',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSendContactRoute = ApiSendContactRouteImport.update({
+  id: '/api/send-contact',
+  path: '/api/send-contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BusinessesLogisticsPartnershipsRoute =
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/businesses': typeof BusinessesRoute
   '/contact': typeof ContactRoute
   '/partnerships': typeof PartnershipsRoute
+  '/api/send-contact': typeof ApiSendContactRoute
   '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
   '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
   '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/businesses': typeof BusinessesRoute
   '/contact': typeof ContactRoute
   '/partnerships': typeof PartnershipsRoute
+  '/api/send-contact': typeof ApiSendContactRoute
   '/businesses/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
   '/businesses/mobility-travel': typeof BusinessesMobilityTravelRoute
   '/businesses/property-hospitality': typeof BusinessesPropertyHospitalityRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/businesses': typeof BusinessesRoute
   '/contact': typeof ContactRoute
   '/partnerships': typeof PartnershipsRoute
+  '/api/send-contact': typeof ApiSendContactRoute
   '/businesses_/logistics-partnerships': typeof BusinessesLogisticsPartnershipsRoute
   '/businesses_/mobility-travel': typeof BusinessesMobilityTravelRoute
   '/businesses_/property-hospitality': typeof BusinessesPropertyHospitalityRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/businesses'
     | '/contact'
     | '/partnerships'
+    | '/api/send-contact'
     | '/businesses/logistics-partnerships'
     | '/businesses/mobility-travel'
     | '/businesses/property-hospitality'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/businesses'
     | '/contact'
     | '/partnerships'
+    | '/api/send-contact'
     | '/businesses/logistics-partnerships'
     | '/businesses/mobility-travel'
     | '/businesses/property-hospitality'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/businesses'
     | '/contact'
     | '/partnerships'
+    | '/api/send-contact'
     | '/businesses_/logistics-partnerships'
     | '/businesses_/mobility-travel'
     | '/businesses_/property-hospitality'
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   BusinessesRoute: typeof BusinessesRoute
   ContactRoute: typeof ContactRoute
   PartnershipsRoute: typeof PartnershipsRoute
+  ApiSendContactRoute: typeof ApiSendContactRoute
   BusinessesLogisticsPartnershipsRoute: typeof BusinessesLogisticsPartnershipsRoute
   BusinessesMobilityTravelRoute: typeof BusinessesMobilityTravelRoute
   BusinessesPropertyHospitalityRoute: typeof BusinessesPropertyHospitalityRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnershipsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/send-contact': {
+      id: '/api/send-contact'
+      path: '/api/send-contact'
+      fullPath: '/api/send-contact'
+      preLoaderRoute: typeof ApiSendContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/businesses_/logistics-partnerships': {
       id: '/businesses_/logistics-partnerships'
       path: '/businesses/logistics-partnerships'
@@ -266,6 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   BusinessesRoute: BusinessesRoute,
   ContactRoute: ContactRoute,
   PartnershipsRoute: PartnershipsRoute,
+  ApiSendContactRoute: ApiSendContactRoute,
   BusinessesLogisticsPartnershipsRoute: BusinessesLogisticsPartnershipsRoute,
   BusinessesMobilityTravelRoute: BusinessesMobilityTravelRoute,
   BusinessesPropertyHospitalityRoute: BusinessesPropertyHospitalityRoute,

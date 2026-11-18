@@ -1,410 +1,51 @@
-import { createContext, useContext, useState, type FormEvent, type ReactNode } from "react";
+import { type FormEvent, useState, useEffect, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   BriefcaseBusiness,
-  Building2,
   Check,
-  ChevronDown,
   Globe2,
   Headphones,
   Instagram,
-  Laptop,
   MapPin,
-  Menu,
-  Network,
-  PackageCheck,
-  Plane,
+ 
   Smartphone,
   Truck,
   UsersRound,
   X,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import heroImage from "@/assets/folley-group-hero.jpg";
-import mobilityImage from "@/assets/folley-mobility.jpg";
-import propertyImage from "@/assets/folley-property.jpg";
-import technologyImage from "@/assets/folley-technology.jpg";
-import fashionImage from "@/assets/folley-fashion.jpg";
-import logisticsImage from "@/assets/folley-logistics.jpg";
 
-type Language = "en" | "fr";
-const LanguageContext = createContext<{ language: Language; toggle: () => void } | null>(null);
 
-export function useLanguage() {
-  const value = useContext(LanguageContext);
-  if (!value) throw new Error("Folley Group pages must be rendered inside FolleySiteShell.");
-  return value;
-}
+import {
+  useLanguage,
+  text,
+  type CopyKey,
+} from "@/components/folley/Language";
 
-const copy = {
-  en: {
-    home: "Home",
-    about: "About",
-    businesses: "Our Businesses",
-    brands: "Our Brands",
-    partnerships: "Partnerships",
-    contact: "Contact",
-    contactUs: "Contact Us",
-    menu: "Open navigation",
-    heroEyebrow: "A diversified business group · Goma, DRC",
-    heroTitle: "Connecting people, business & opportunities.",
-    heroText:
-      "Mobility, property, technology and trade—brought together by one trusted regional group.",
-    explore: "Explore our businesses",
-    discover: "Discover Folley Group",
-    scroll: "Scroll to explore",
-    introLabel: "One group. Many ways forward.",
-    introTitle: "Business solutions, built around connection.",
-    introText:
-      "Folley Group brings together practical services and growing ventures across the Great Lakes region. Each division opens a clear path to the people, expertise and opportunities you need.",
-    businessesKicker: "What we do",
-    businessesTitle: "Our businesses",
-    businessesText: "One group, connected capabilities. Find the team that fits your next step.",
-    viewDivision: "Explore division",
-    brandsKicker: "Independent ventures, connected by a shared vision",
-    brandsTitle: "Our brands",
-    brandsText: "Distinct businesses, brought together within the Folley Group family.",
-    visit: "Visit website",
-    follow: "Instagram",
-    marketsLabel: "Rooted in the region",
-    marketsTitle: "Growing across the region.",
-    marketsText:
-      "Headquartered in Goma, Folley Group is building connections across neighboring markets through business, services and partnerships.",
-    headquarters: "Headquarters",
-    globalLabel: "Our vision",
-    globalTitle: "Building connections beyond borders.",
-    globalText:
-      "We are working toward a future where people and businesses can move, collaborate and grow with confidence across borders.",
-    partnerLabel: "For businesses, contractors & organizations",
-    partnerTitle: "Let's build opportunities together.",
-    partnerText:
-      "Bring us a challenge, a capability or a new opportunity. We welcome practical conversations that help businesses move forward.",
-    partnerCta: "Become a partner",
-    aboutLink: "Our story",
-    trustTitle: "A connected group for a connected region.",
-    trust1: "Multiple services under one group",
-    trust2: "Regional business network",
-    trust3: "Customer-focused approach",
-    trust4: "Diverse business capabilities",
-    trust5: "Strategic partnerships",
-    trust6: "Growing international vision",
-    founderLabel: "Leadership",
-    founderName: "Rwanika Jean Claude",
-    founderRole: "Founder, Folley Group",
-    founderText:
-      "With a background in Business Information Technology, Jean Claude brings experience spanning IT, computer maintenance, business and project management, data analysis and fashion.",
-    founderQuote: "Unity is strength; with God, all things are possible.",
-    contactTitle: "Start a conversation.",
-    contactText: "Tell us what you are looking for. The right Folley Group team will be ready to help.",
-    footerText: "Connecting people, business and opportunities across the Great Lakes region.",
-    quickLinks: "Explore",
-    reachUs: "Reach us",
-    markets: "Our markets",
-    copyright: "All rights reserved.",
-    formName: "Full name",
-    formEmail: "Email address",
-    formPhone: "Phone number",
-    formService: "Service interested in",
-    formMessage: "Your message",
-    formPlaceholder: "How can we help?",
-    formSend: "Send enquiry",
-    formNote: "Your email app will open with your message ready to send.",
-    choose: "Choose a service",
-    whatsapp: "Chat with Folley Group on WhatsApp",
-    divisionContact: "Enquire about this division",
-    divisionBack: "All businesses",
-    services: "Services",
-    related: "Explore other businesses",
-    social: "Connect with Folley Group",
-    socialText: "Follow our ventures and stay connected.",
-  },
-  fr: {
-    home: "Accueil",
-    about: "À propos",
-    businesses: "Nos activités",
-    brands: "Nos marques",
-    partnerships: "Partenariats",
-    contact: "Contact",
-    contactUs: "Nous contacter",
-    menu: "Ouvrir la navigation",
-    heroEyebrow: "Un groupe diversifié · Goma, RDC",
-    heroTitle: "Relier les personnes, les affaires et les opportunités.",
-    heroText:
-      "Mobilité, immobilier, technologie et commerce réunis au sein d’un groupe régional de confiance.",
-    explore: "Découvrir nos activités",
-    discover: "Découvrir Folley Group",
-    scroll: "Défiler pour découvrir",
-    introLabel: "Un groupe. Plusieurs voies d’avenir.",
-    introTitle: "Des solutions d’affaires fondées sur les connexions.",
-    introText:
-      "Folley Group rassemble des services pratiques et des activités en développement dans la région des Grands Lacs. Chaque division vous met en relation avec les personnes, l’expertise et les opportunités dont vous avez besoin.",
-    businessesKicker: "Nos domaines",
-    businessesTitle: "Nos activités",
-    businessesText: "Un groupe, des compétences complémentaires. Trouvez l’équipe qui vous convient.",
-    viewDivision: "Découvrir la division",
-    brandsKicker: "Des marques indépendantes réunies par une vision commune",
-    brandsTitle: "Nos marques",
-    brandsText: "Des entreprises distinctes réunies au sein de la famille Folley Group.",
-    visit: "Visiter le site",
-    follow: "Instagram",
-    marketsLabel: "Ancrés dans la région",
-    marketsTitle: "En pleine expansion dans la région.",
-    marketsText:
-      "Basé à Goma, Folley Group tisse des liens dans les marchés voisins par ses activités, ses services et ses partenariats.",
-    headquarters: "Siège social",
-    globalLabel: "Notre vision",
-    globalTitle: "Créer des liens au-delà des frontières.",
-    globalText:
-      "Nous œuvrons pour que les personnes et les entreprises puissent se déplacer, collaborer et grandir en confiance au-delà des frontières.",
-    partnerLabel: "Pour les entreprises, entrepreneurs et organisations",
-    partnerTitle: "Construisons des opportunités ensemble.",
-    partnerText:
-      "Partagez un défi, un savoir-faire ou une nouvelle opportunité. Nous accueillons les échanges concrets qui font avancer les entreprises.",
-    partnerCta: "Devenir partenaire",
-    aboutLink: "Notre histoire",
-    trustTitle: "Un groupe connecté pour une région connectée.",
-    trust1: "Plusieurs services sous un même groupe",
-    trust2: "Réseau d’affaires régional",
-    trust3: "Approche centrée sur le client",
-    trust4: "Des compétences diversifiées",
-    trust5: "Partenariats stratégiques",
-    trust6: "Une vision internationale en développement",
-    founderLabel: "Direction",
-    founderName: "Rwanika Jean Claude",
-    founderRole: "Fondateur, Folley Group",
-    founderText:
-      "Diplômé en Business Information Technology, Jean Claude possède une expérience en informatique, maintenance, gestion d’entreprise et de projet, analyse de données et mode.",
-    founderQuote: "L’unité fait la force ; avec Dieu tout est possible.",
-    contactTitle: "Entamons la conversation.",
-    contactText: "Décrivez votre besoin. L’équipe Folley Group concernée sera prête à vous aider.",
-    footerText: "Relier les personnes, les affaires et les opportunités dans la région des Grands Lacs.",
-    quickLinks: "Explorer",
-    reachUs: "Nous joindre",
-    markets: "Nos marchés",
-    copyright: "Tous droits réservés.",
-    formName: "Nom complet",
-    formEmail: "Adresse e-mail",
-    formPhone: "Numéro de téléphone",
-    formService: "Service souhaité",
-    formMessage: "Votre message",
-    formPlaceholder: "Comment pouvons-nous vous aider ?",
-    formSend: "Envoyer la demande",
-    formNote: "Votre messagerie s’ouvrira avec le message prêt à être envoyé.",
-    choose: "Choisir un service",
-    whatsapp: "Contacter Folley Group sur WhatsApp",
-    divisionContact: "Contacter cette division",
-    divisionBack: "Toutes nos activités",
-    services: "Services",
-    related: "Découvrir nos autres activités",
-    social: "Suivez Folley Group",
-    socialText: "Suivez nos marques et restez en contact.",
-  },
-} as const;
+import {
+  divisions,
+  divisionHref,
+  brands,
+  type Division,
+} from "@/components/folley/data";
 
-type CopyKey = keyof typeof copy.en;
-const text = (language: Language, key: CopyKey) => copy[language][key];
+import { Eyebrow } from "@/components/folley/shared/Eyebrow";
+import { PageIntro } from "@/components/folley/shared/PageIntro";
+import { ContactBand } from "@/components/folley/shared/ContactBand";
+import { TrustStrip } from "@/components/folley/shared/TrustStrip";
+import { MarketsSection } from "@/components/folley/shared/MarketsSection";
+import { DivisionCard } from "@/components/folley/shared/DivisionCard";
+import { SectionHeading } from "@/components/folley/shared/SectionHeading";
 
-export type Division = {
-  slug: string;
-  title: string;
-  titleFr: string;
-  short: string;
-  shortFr: string;
-  intro: string;
-  introFr: string;
-  services: string[];
-  servicesFr: string[];
-  image: string;
-  imageAlt: string;
-  Icon: LucideIcon;
-};
+import { ScrollReveal } from "@/components/folley/shared/ScrollReveal";
 
-export const divisions: Division[] = [
-  {
-    slug: "mobility-travel",
-    title: "Mobility & Travel",
-    titleFr: "Mobilité & voyages",
-    short: "Move people and goods, connect destinations, make every journey easier.",
-    shortFr: "Transport de personnes et de biens, destinations et facilitation de vos déplacements.",
-    intro: "From vehicle rental and passenger transport to airport facilitation and travel tickets, we help make regional journeys and deliveries easier to arrange.",
-    introFr: "De la location de véhicules au transport de passagers, en passant par les formalités à l’aéroport et les billets, nous facilitons vos déplacements et livraisons dans la région.",
-    services: ["Vehicle rental", "Transportation of goods and people", "Mail transportation", "Airport facilitation", "Travel ticket assistance", "Tourism-related services"],
-    servicesFr: ["Location de véhicules", "Transport de biens et de personnes", "Transport de courrier", "Facilitation aéroportuaire", "Assistance pour les billets de voyage", "Services liés au tourisme"],
-    image: mobilityImage,
-    imageAlt: "Travelers meeting a driver beside a passenger van",
-    Icon: Plane,
-  },
-  {
-    slug: "property-hospitality",
-    title: "Property & Hospitality",
-    titleFr: "Immobilier & hôtellerie",
-    short: "Find a place to stay, live or welcome guests across the region.",
-    shortFr: "Trouvez un logement, un hébergement ou des services hôteliers dans la région.",
-    intro: "We connect people with housing searches, accommodation assistance and hotel services—making it easier to find the right place for a visit or a new chapter.",
-    introFr: "Nous vous accompagnons dans votre recherche de logement, d’hébergement et de services hôteliers afin de trouver le lieu adapté à votre séjour ou à votre installation.",
-    services: ["Real estate", "Housing search", "Accommodation assistance", "Hotel services"],
-    servicesFr: ["Immobilier", "Recherche de logement", "Assistance à l’hébergement", "Services hôteliers"],
-    image: propertyImage,
-    imageAlt: "Contemporary lakeside property and hospitality setting",
-    Icon: Building2,
-  },
-  {
-    slug: "technology-telecoms",
-    title: "Technology & Telecoms",
-    titleFr: "Technologie & télécoms",
-    short: "Everyday mobile, internet and IT support for people and businesses.",
-    shortFr: "Des services mobiles, internet et informatiques pour les particuliers et les entreprises.",
-    intro: "From mobile and internet services to network maintenance and IT support, our team helps people and organizations stay connected and productive.",
-    introFr: "Des services mobiles et internet à la maintenance réseau et au support informatique, notre équipe aide les particuliers et les organisations à rester connectés et productifs.",
-    services: ["Mobile services", "Internet services", "Network services", "Computer services", "Maintenance", "IT support"],
-    servicesFr: ["Services mobiles", "Services internet", "Services réseau", "Services informatiques", "Maintenance", "Assistance informatique"],
-    image: technologyImage,
-    imageAlt: "Technology specialist helping a customer in a mobile shop",
-    Icon: Laptop,
-  },
-  {
-    slug: "trade-commerce",
-    title: "Trade & Commerce",
-    titleFr: "Commerce & échanges",
-    short: "Bring businesses and commercial opportunities within reach.",
-    shortFr: "Rapprochez les entreprises et les opportunités commerciales.",
-    intro: "We support general trade, business connections and the sale or transfer of businesses within the region—opening doors to practical commercial opportunities.",
-    introFr: "Nous soutenons le commerce général, les relations d’affaires ainsi que la vente ou le transfert d’activités dans la région, au service d’opportunités commerciales concrètes.",
-    services: ["General trade", "Commercial opportunities", "Business sale and transfer within the region", "Business connections"],
-    servicesFr: ["Commerce général", "Opportunités commerciales", "Vente et transfert d’activités dans la région", "Relations d’affaires"],
-    image: logisticsImage,
-    imageAlt: "Business partners discussing a regional trade opportunity",
-    Icon: BriefcaseBusiness,
-  },
-  {
-    slug: "logistics-partnerships",
-    title: "Logistics & Partnerships",
-    titleFr: "Logistique & partenariats",
-    short: "Coordinate logistics, subcontracting and collaboration that moves work forward.",
-    shortFr: "Coordonnez la logistique, la sous-traitance et les collaborations qui font avancer les projets.",
-    intro: "We welcome collaboration with companies and contractors, connecting logistics and subcontracting needs with regional business capabilities.",
-    introFr: "Nous accueillons les collaborations avec les entreprises et les entrepreneurs, en reliant les besoins logistiques et de sous-traitance aux compétences régionales.",
-    services: ["Logistics", "Subcontracting", "Company partnerships", "Contractor partnerships", "Business collaboration"],
-    servicesFr: ["Logistique", "Sous-traitance", "Partenariats avec les entreprises", "Partenariats avec les entrepreneurs", "Collaboration commerciale"],
-    image: logisticsImage,
-    imageAlt: "Regional business team coordinating a logistics partnership",
-    Icon: Truck,
-  },
-];
 
-function divisionHref(slug: Division["slug"]):
-  | "/businesses"
-  | "/businesses/mobility-travel"
-  | "/businesses/property-hospitality"
-  | "/businesses/technology-telecoms"
-  | "/businesses/trade-commerce"
-  | "/businesses/logistics-partnerships" {
-  switch (slug) {
-    case "mobility-travel": return "/businesses/mobility-travel";
-    case "property-hospitality": return "/businesses/property-hospitality";
-    case "technology-telecoms": return "/businesses/technology-telecoms";
-    case "trade-commerce": return "/businesses/trade-commerce";
-    case "logistics-partnerships": return "/businesses/logistics-partnerships";
-    default: return "/businesses";
-  }
-}
-
-const brands = [
-  { name: "Folley Collection", category: "Fashion · Online retail", categoryFr: "Mode · Vente en ligne", url: "https://folleycollection.netlify.app/", instagram: "https://www.instagram.com/folleycollection_", image: fashionImage, alt: "Fashion editorial in Goma for Folley Collection" },
-  { name: "Folley Tech", category: "Technology · Online retail", categoryFr: "Technologie · Vente en ligne", url: "https://folleytech.netlify.app/", instagram: "https://www.instagram.com/folleytech", image: technologyImage, alt: "Technology retail and customer service for Folley Tech" },
-  { name: "Folley J.C.", category: "Founder · Folley Group", categoryFr: "Fondateur · Folley Group", url: "https://www.instagram.com/FolleyJC", instagram: "https://www.instagram.com/FolleyJC", image: heroImage, alt: "Goma, home of Folley Group" },
-];
-
-const navItems = [
-  { to: "/", key: "home" as const },
-  { to: "/about", key: "about" as const },
-  { to: "/businesses", key: "businesses" as const },
-  { to: "/brands", key: "brands" as const },
-  { to: "/partnerships", key: "partnerships" as const },
-];
-
-export function FolleySiteShell({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-  return (
-    <LanguageContext.Provider value={{ language, toggle: () => setLanguage((value) => value === "en" ? "fr" : "en") }}>
-      <Header />
-      <main>{children}</main>
-      <Footer />
-      <WhatsAppButton />
-    </LanguageContext.Provider>
-  );
-}
-
-function Wordmark({ inverse = false }: { inverse?: boolean }) {
-  return (
-    <Link to="/" aria-label="Folley Group home" className={`group inline-flex items-center gap-3 ${inverse ? "text-background" : "text-foreground"}`}>
-      <span className="flex size-10 items-center justify-center bg-primary text-sm font-bold text-primary-foreground">FG</span>
-      <span className="flex flex-col leading-tight"><span className="text-sm font-semibold tracking-[0.08em]">FOLLEY</span><span className="text-[10px] font-medium tracking-[0.24em] text-muted-foreground">GROUP</span></span>
-    </Link>
-  );
-}
-
-function Header() {
-  const { language, toggle } = useLanguage();
-  const [open, setOpen] = useState(false);
-  const c = (key: CopyKey) => text(language, key);
-  return (
-    <header className="sticky top-0 z-50 border-b border-border/80 bg-background/95 backdrop-blur-md">
-      <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
-        <Wordmark />
-        <nav aria-label="Main navigation" className="hidden items-center gap-7 lg:flex">
-          {navItems.map((item) => <Link key={item.to} to={item.to} className="text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground">{c(item.key)}</Link>)}
-          <button type="button" onClick={toggle} className="flex items-center gap-1.5 border-l border-border pl-5 text-[11px] font-semibold tracking-wide text-foreground" aria-label="Switch language">
-            <span className={language === "en" ? "text-primary" : "text-muted-foreground"}>EN</span><span className="text-muted-foreground">/</span><span className={language === "fr" ? "text-primary" : "text-muted-foreground"}>FR</span><ChevronDown className="size-3 text-muted-foreground" />
-          </button>
-          <Button asChild className="h-10 rounded-sm px-5 text-xs"><Link to="/contact">{c("contactUs")}<ArrowRight /></Link></Button>
-        </nav>
-        <div className="flex items-center gap-2 lg:hidden">
-          <Button variant="ghost" size="sm" onClick={toggle} aria-label="Switch language" className="px-2 text-xs font-semibold">{language.toUpperCase()} <ChevronDown className="size-3" /></Button>
-          <Button variant="outline" size="icon" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close navigation" : c("menu")} className="rounded-sm">
-            {open ? <X /> : <Menu />}
-          </Button>
-        </div>
-      </div>
-      {open && <nav aria-label="Mobile navigation" className="border-t border-border bg-background px-5 py-4 lg:hidden">
-        {navItems.map((item) => <Link onClick={() => setOpen(false)} key={item.to} to={item.to} className="block border-b border-border py-3 text-sm font-medium">{c(item.key)}</Link>)}
-        <Link onClick={() => setOpen(false)} to="/contact" className="mt-4 block"><Button className="w-full rounded-sm">{c("contactUs")}<ArrowRight /></Button></Link>
-      </nav>}
-    </header>
-  );
-}
-
-function Footer() {
-  const { language } = useLanguage();
-  const c = (key: CopyKey) => text(language, key);
-  return (
-    <footer className="bg-foreground text-background">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.5fr_1fr_1fr_1.2fr] lg:px-12 lg:py-20">
-        <div><Wordmark inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-background/65">{c("footerText")}</p><a href="https://www.instagram.com/FolleyJC" target="_blank" rel="noreferrer" aria-label="Folley Group on Instagram" className="mt-5 inline-flex items-center gap-2 text-sm text-background/80 hover:text-background"><Instagram className="size-4" />Folley Group</a></div>
-        <div><h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-background/50">{c("quickLinks")}</h2><div className="mt-5 flex flex-col gap-3">{navItems.slice(1).map((item) => <Link key={item.to} to={item.to} className="text-sm text-background/75 hover:text-background">{c(item.key)}</Link>)}<Link to="/contact" className="text-sm text-background/75 hover:text-background">{c("contact")}</Link></div></div>
-        <div><h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-background/50">{c("businesses")}</h2><div className="mt-5 flex flex-col gap-3">{divisions.map((division) => <Link key={division.slug} to={divisionHref(division.slug)} className="text-sm text-background/75 hover:text-background">{language === "fr" ? division.titleFr : division.title}</Link>)}</div></div>
-        <div><h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-background/50">{c("reachUs")}</h2><div className="mt-5 flex flex-col gap-3 text-sm text-background/75"><a href="mailto:rwanikajean@gmail.com" className="hover:text-background">rwanikajean@gmail.com</a><a href="tel:+243973350035" className="hover:text-background">+243 973 350 035</a><span>{c("headquarters")}</span><span>Quartier Le Volcan, Goma<br />Nord-Kivu, RD Congo</span></div></div>
-      </div>
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-2 border-t border-background/15 px-5 py-5 text-xs text-background/50 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12"><span>© 2026 Folley Group. {c("copyright")}</span><span>DR Congo · Rwanda · Uganda · Burundi</span></div>
-    </footer>
-  );
-}
-
-function WhatsAppButton() {
-  const { language } = useLanguage();
-  const message = language === "fr" ? "Bonjour Folley Group, j’ai visité votre site et je souhaite en savoir plus sur vos services." : "Hello Folley Group, I visited your website and would like to enquire about your services.";
-  return <a className="whatsapp-float" href={`https://wa.me/243973350035?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer" aria-label={text(language, "whatsapp")}><Headphones className="size-5" /><span className="hidden sm:inline">WhatsApp</span></a>;
-}
-
-function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
-  return <p className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] ${light ? "text-background/70" : "text-primary"}`}><span className="h-px w-7 bg-current" />{children}</p>;
-}
 
 export function HomePage() {
   const { language } = useLanguage();
@@ -419,85 +60,483 @@ export function HomePage() {
       </div>
       <div className="absolute bottom-0 right-0 hidden bg-primary px-8 py-5 text-xs font-medium text-primary-foreground md:block"><MapPin className="mr-2 inline size-4" />Goma, North Kivu · DRC</div>
     </section>
-    <section className="bg-background py-20 sm:py-28"><div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16 lg:px-12"><div><Eyebrow>{c("introLabel")}</Eyebrow><h2 className="mt-6 max-w-lg text-3xl font-semibold leading-tight tracking-[-0.025em] sm:text-4xl">{c("introTitle")}</h2></div><div className="max-w-2xl pt-1"><p className="text-base leading-8 text-muted-foreground">{c("introText")}</p><Link to="/about" className="mt-7 inline-flex items-center gap-2 border-b border-primary pb-2 text-sm font-semibold text-foreground">{c("discover")}<ArrowRight className="size-4 text-primary" /></Link></div></div></section>
+    <section className="bg-background py-20 sm:py-28">
+  <div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16 lg:px-12">
+
+    {/* Vision heading from left */}
+    <ScrollReveal direction="left">
+      <div>
+        <Eyebrow>{c("introLabel")}</Eyebrow>
+
+        <h2 className="mt-6 max-w-lg text-3xl font-semibold leading-tight tracking-[-0.025em] sm:text-4xl">
+          {c("introTitle")}
+        </h2>
+      </div>
+    </ScrollReveal>
+
+    {/* Vision description from right */}
+    <ScrollReveal direction="right" delay={150}>
+      <div className="max-w-2xl pt-1">
+        <p className="text-base leading-8 text-muted-foreground">
+          {c("introText")}
+        </p>
+
+        <Link
+          to="/about"
+          className="mt-7 inline-flex items-center gap-2 border-b border-primary pb-2 text-sm font-semibold text-foreground"
+        >
+          {c("discover")}
+          <ArrowRight className="size-4 text-primary" />
+        </Link>
+      </div>
+    </ScrollReveal>
+
+  </div>
+</section>
     <BusinessesPreview />
     <TrustStrip />
     <BrandsPreview />
     <MarketsSection />
-    <VisionSection />
     <PartnershipCallout />
     <ContactBand />
   </>;
 }
 
-function SectionHeading({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
-  return <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between"><div><Eyebrow>{eyebrow}</Eyebrow><h2 className="mt-5 max-w-2xl text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{title}</h2></div><p className="max-w-md text-sm leading-7 text-muted-foreground">{description}</p></div>;
-}
-
-export function DivisionCard({ division }: { division: Division }) {
-  const { language } = useLanguage();
-  const title = language === "fr" ? division.titleFr : division.title;
-  const description = language === "fr" ? division.shortFr : division.short;
-  return <article className="group border-t border-border pt-5">
-    <Link to={divisionHref(division.slug)} className="block"><div className="relative aspect-[1.42] overflow-hidden bg-muted"><img src={division.image} alt={division.imageAlt} width={1200} height={800} loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.035]" /><span className="absolute left-4 top-4 flex size-10 items-center justify-center bg-background text-primary"><division.Icon className="size-5" /></span></div><div className="mt-5 flex items-start justify-between gap-4"><div><h3 className="text-lg font-semibold">{title}</h3><p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">{description}</p></div><span className="mt-1 flex size-9 shrink-0 items-center justify-center border border-border transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground"><ArrowUpRight className="size-4" /></span></div></Link>
-  </article>;
-}
 
 function BusinessesPreview() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
-  return <section className="bg-muted/50 py-20 sm:py-28"><div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12"><SectionHeading eyebrow={c("businessesKicker")} title={c("businessesTitle")} description={c("businessesText")} /><div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">{divisions.map((division) => <DivisionCard key={division.slug} division={division} />)}</div><div className="mt-10 text-right"><Link to="/businesses" className="inline-flex items-center gap-2 text-sm font-semibold">{c("businesses")}<ArrowRight className="size-4 text-primary" /></Link></div></div></section>;
+
+  return (
+    <section className="bg-muted/50 py-20 sm:py-28">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+
+        <div className="grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:items-end">
+          <ScrollReveal direction="left">
+            <div>
+              <Eyebrow>{c("businessesKicker")}</Eyebrow>
+
+              <h2 className="mt-5 text-3xl font-semibold tracking-[-0.025em] sm:text-4xl">
+                {c("businessesTitle")}
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="right" delay={150}>
+            <p className="max-w-xl text-sm leading-7 text-muted-foreground md:justify-self-end">
+              {c("businessesText")}
+            </p>
+          </ScrollReveal>
+        </div>
+
+        <div className="mt-10 grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {divisions.map((division, index) => (
+            <ScrollReveal
+              key={division.slug}
+              direction="up"
+              delay={index * 120}
+            >
+              <DivisionCard division={division} />
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal direction="up" delay={200}>
+          <div className="mt-10 text-right">
+            <Link
+              to="/businesses"
+              className="inline-flex items-center gap-2 text-sm font-semibold"
+            >
+              {c("businesses")}
+              <ArrowRight className="size-4 text-primary" />
+            </Link>
+          </div>
+        </ScrollReveal>
+
+      </div>
+    </section>
+  );
 }
 
-function TrustStrip() {
-  const { language } = useLanguage();
-  const c = (key: CopyKey) => text(language, key);
-  const values = [c("trust1"), c("trust2"), c("trust3"), c("trust4"), c("trust5"), c("trust6")];
-  const icons = [Network, Globe2, UsersRound, PackageCheck, BriefcaseBusiness, ArrowUpRight];
-  return <section className="bg-primary py-14 text-primary-foreground sm:py-16"><div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12"><h2 className="max-w-xl text-2xl font-semibold leading-snug sm:text-3xl">{c("trustTitle")}</h2><div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{values.map((value, index) => { const Icon = icons[index] ?? Check; return <div key={value} className="flex items-center gap-3 border-t border-primary-foreground/25 pt-4 text-sm"><Icon className="size-5 shrink-0 text-primary-foreground/75" />{value}</div>; })}</div></div></section>;
-}
+
 
 function BrandsPreview() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
-  return <section className="py-20 sm:py-28"><div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12"><SectionHeading eyebrow={c("brandsKicker")} title={c("brandsTitle")} description={c("brandsText")} /><div className="grid gap-6 md:grid-cols-3">{brands.map((brand) => <article key={brand.name} className="group border border-border"><Link to="/brands" className="block overflow-hidden"><img src={brand.image} alt={brand.alt} width={1200} height={800} loading="lazy" className="aspect-[1.35] w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]" /></Link><div className="p-5"><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-primary">{language === "fr" ? brand.categoryFr : brand.category}</p><h3 className="mt-2 text-xl font-semibold">{brand.name}</h3><div className="mt-5 flex flex-wrap gap-4"><a href={brand.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold">{c("visit")}<ArrowUpRight className="size-3.5" /></a><a href={brand.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Instagram className="size-3.5" />{c("follow")}</a></div></div></article>)}</div></div></section>;
+  return <section className="py-20 sm:py-28"><div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12"><SectionHeading eyebrow={c("brandsKicker")} title={c("brandsTitle")} description={c("brandsText")} /><div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">{brands.map((brand) => <article key={brand.name} className="group border border-border"><Link to="/brands" className="block overflow-hidden"><img src={brand.image} alt={brand.alt} width={1200} height={800} loading="lazy" className="aspect-[1.35] w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]" /></Link><div className="p-5"><p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-primary">{language === "fr" ? brand.categoryFr : brand.category}</p><h3 className="mt-2 text-xl font-semibold">{brand.name}</h3><div className="mt-5 flex flex-wrap gap-4"><a href={brand.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold">{c("visit")}<ArrowUpRight className="size-3.5" /></a><a href={brand.instagram} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"><Instagram className="size-3.5" />{c("follow")}</a></div></div></article>)}</div></div></section>;
 }
 
-function MarketsSection() {
-  const { language } = useLanguage();
-  const c = (key: CopyKey) => text(language, key);
-  const markets = ["Democratic Republic of Congo", "Rwanda", "Uganda", "Burundi"];
-  const marketsFr = ["République démocratique du Congo", "Rwanda", "Ouganda", "Burundi"];
-  return <section className="border-y border-border bg-muted/35 py-16 sm:py-20"><div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[1fr_1fr] md:items-center lg:px-12"><div><Eyebrow>{c("marketsLabel")}</Eyebrow><h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{c("marketsTitle")}</h2><p className="mt-4 max-w-lg text-sm leading-7 text-muted-foreground">{c("marketsText")}</p><p className="mt-7 text-sm font-semibold">{c("headquarters")}</p><p className="mt-1 text-sm text-muted-foreground">Quartier Le Volcan, Goma, North Kivu, DRC</p></div><div className="grid grid-cols-2 border-l border-t border-border">{(language === "fr" ? marketsFr : markets).map((market, index) => <div key={market} className="flex min-h-24 items-center gap-3 border-b border-r border-border px-4 sm:min-h-28 sm:px-7"><span className="text-xs font-semibold text-primary">0{index + 1}</span><span className="text-sm font-medium">{market}</span></div>)}</div></div></section>;
-}
 
+
+{/*
 function VisionSection() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
   return <section className="relative overflow-hidden bg-foreground text-background"><img src={heroImage} alt="Lake Kivu and the Great Lakes region" width={1600} height={960} loading="lazy" className="absolute inset-0 size-full object-cover opacity-25" /><div className="absolute inset-0 bg-foreground/55" /><div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-8 sm:py-28 lg:px-12"><div className="max-w-2xl"><Eyebrow light>{c("globalLabel")}</Eyebrow><h2 className="mt-6 text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">{c("globalTitle")}</h2><p className="mt-5 max-w-xl text-base leading-8 text-background/75">{c("globalText")}</p></div></div></section>;
 }
 
+*/}
 function PartnershipCallout() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
-  return <section className="py-20 sm:py-24"><div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[1fr_0.9fr] md:items-center lg:px-12"><div><Eyebrow>{c("partnerLabel")}</Eyebrow><h2 className="mt-6 max-w-xl text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">{c("partnerTitle")}</h2><p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">{c("partnerText")}</p><Button asChild className="mt-7 h-11 rounded-sm px-5"><Link to="/partnerships">{c("partnerCta")}<ArrowRight /></Link></Button></div><div className="grid grid-cols-2 gap-px border border-border bg-border">{[BriefcaseBusiness, Truck, UsersRound, Globe2].map((Icon, index) => <div key={index} className="flex min-h-32 flex-col justify-between bg-background p-5 sm:p-7"><Icon className="size-5 text-primary" /><span className="text-xs font-medium">{(language === "fr" ? ["Partenariats stratégiques", "Sous-traitance", "Collaboration entrepreneuriale", "Opportunités commerciales"] : ["Strategic partnerships", "Subcontracting", "Contractor collaboration", "Commercial opportunities"])[index]}</span></div>)}</div></div></section>;
-}
 
+  const items =
+    language === "fr"
+      ? [
+          "Logistique",
+          "Sous-traitance",
+          "Partenariats avec des entreprises",
+          "Partenariats avec des entrepreneurs",
+        ]
+      : [
+          "Logistics",
+          "Subcontracting",
+          "Partnerships with Companies",
+          "Partnerships with Contractors",
+        ];
+
+  const icons = [
+    Truck,
+    BriefcaseBusiness,
+    UsersRound,
+    Globe2,
+  ];
+
+  return (
+    <section className="bg-foreground py-20 text-background sm:py-24">
+      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 md:grid-cols-[1fr_0.9fr] md:items-center lg:px-12">
+
+        {/* Partnership content */}
+        <ScrollReveal direction="left">
+          <div>
+            <Eyebrow light>
+              {c("partnerLabel")}
+            </Eyebrow>
+
+            <h2 className="mt-6 max-w-xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-background sm:text-4xl">
+              {c("partnerTitle")}
+            </h2>
+
+            <p className="mt-5 max-w-xl text-sm leading-7 text-background/70">
+              {c("partnerText")}
+            </p>
+
+            <Button
+              asChild
+              className="mt-7 h-11 rounded-sm bg-primary px-5 text-primary-foreground hover:bg-primary/90"
+            >
+              <Link to="/partnerships">
+                {c("partnerCta")}
+                <ArrowRight />
+              </Link>
+            </Button>
+          </div>
+        </ScrollReveal>
+
+        {/* Partnership areas */}
+        <ScrollReveal
+          direction="right"
+          delay={150}
+        >
+          <div className="grid grid-cols-2 gap-px border border-background/20 bg-background/20">
+            {items.map((item, index) => {
+              const Icon =
+                icons[index] ?? BriefcaseBusiness;
+
+              return (
+                <div
+                  key={item}
+                  className="flex min-h-36 flex-col justify-between bg-foreground p-5 sm:p-7"
+                >
+                  <Icon className="size-5 text-primary" />
+
+                  <span className="max-w-[180px] text-xs font-medium leading-5 text-background/90">
+                    {item}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+
+      </div>
+    </section>
+  );
+}
+{/*
 function ContactBand() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
   return <section className="border-t border-border bg-muted/50 py-14 sm:py-16"><div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-5 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12"><div><Eyebrow>{c("contact")}</Eyebrow><h2 className="mt-4 text-2xl font-semibold">{c("contactTitle")}</h2></div><Button asChild className="h-11 w-fit rounded-sm px-5"><Link to="/contact">{c("contactUs")}<ArrowUpRight /></Link></Button></div></section>;
 }
 
+*/}
+
+
+
+
+// ADD THIS NEW COMPONENT HERE
+
+function ComingSoonPage({
+  section,
+  sectionFr,
+}: {
+  section: string;
+  sectionFr: string;
+}) {
+  const { language } = useLanguage();
+  const c = (key: CopyKey) => text(language, key);
+
+  const sectionName = language === "fr" ? sectionFr : section;
+
+  return (
+    <section className="flex min-h-[70vh] items-center bg-background">
+      <div className="mx-auto w-full max-w-[1400px] px-5 py-20 sm:px-8 sm:py-28 lg:px-12">
+
+        <div className="max-w-2xl">
+
+          <Eyebrow>
+            {c("comingSoonLabel")}
+          </Eyebrow>
+
+          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            {sectionName}
+          </p>
+
+          <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.035em] sm:text-5xl">
+            {c("comingSoonTitle")}
+          </h1>
+
+          <p className="mt-5 max-w-xl text-base leading-8 text-muted-foreground">
+            {c("comingSoonText")}
+          </p>
+
+          <Button asChild className="mt-8 h-11 rounded-sm px-5">
+            <Link to="/">
+              {c("backHome")}
+              <ArrowRight />
+            </Link>
+          </Button>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+// BUSINESSES PAGE NOW COMES AFTER IT
+{/*
+export function BusinessesPage() {
+  return (
+    <ComingSoonPage
+      section="Our Businesses"
+      sectionFr="Nos activités"
+    />
+  );
+}
+
+*/}
+
 export function BusinessesPage() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
-  return <><PageIntro eyebrow={c("businessesKicker")} title={c("businessesTitle")} description={c("businessesText")} /><BusinessesPreview /><ContactBand /></>;
+
+  return (
+    <>
+     <PageIntro
+  eyebrow="Folley Group"
+  title={
+    language === "fr"
+      ? "Nos activités"
+      : "Our Businesses"
+  }
+  description={c("businessesText")}
+/>
+
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+
+
+        <div className="space-y-8">
+           {divisions.map((division, index) => {
+              const title =
+                language === "fr"
+                  ? division.titleFr
+                  : division.title;
+
+              const intro =
+                language === "fr"
+                  ? division.introFr
+                  : division.intro;
+
+              const services =
+                language === "fr"
+                  ? division.servicesFr
+                  : division.services;
+
+              const Icon = division.Icon;
+
+              return (
+                <article
+  key={division.slug}
+  className={`grid gap-8 px-6 py-10 md:grid-cols-[0.8fr_1.2fr] md:gap-14 md:px-8 ${
+    index % 2 === 1 ? "bg-muted/35" : "bg-background"
+  }`}
+>
+  {/* Business information */}
+  <ScrollReveal
+    direction="left"
+    delay={index * 100}
+  >
+    <div>
+      <div className="flex items-center gap-3">
+        <span className="text-xs font-semibold text-muted-foreground">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+
+        <Icon className="size-5 text-primary" />
+      </div>
+
+      <h2 className="mt-5 text-2xl font-semibold">
+        {title}
+      </h2>
+
+      <p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">
+        {intro}
+      </p>
+
+      <Link
+        to={divisionHref(division.slug)}
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+      >
+        {language === "fr"
+          ? "En savoir plus"
+          : "Learn more"}
+
+        <ArrowRight className="size-4" />
+      </Link>
+    </div>
+  </ScrollReveal>
+
+  {/* Services */}
+  <ScrollReveal
+    direction="right"
+    delay={150 + index * 100}
+  >
+    <div>
+      <p className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+        Services
+      </p>
+
+      <ul className="grid gap-0 sm:grid-cols-2">
+        {services.map((service) => (
+          <li
+            key={service}
+            className="flex items-start gap-3 border-t border-border py-4 text-sm"
+          >
+            <Check className="mt-0.5 size-4 shrink-0 text-primary" />
+
+            {service}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </ScrollReveal>
+</article>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      <section className="bg-foreground py-16 text-background sm:py-20">
+      <ScrollReveal direction="left">
+
+  <div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] md:items-center lg:px-12">
+    <div>
+      <Eyebrow light>
+        {language === "fr"
+          ? "Boutiques en ligne"
+          : "Online shops"}
+      </Eyebrow>
+
+      <h2 className="mt-5 text-3xl font-semibold">
+        {language === "fr"
+          ? "Découvrez nos activités en ligne."
+          : "Explore our online businesses."}
+      </h2>
+    </div>
+
+    <div>
+      <p className="max-w-xl text-sm leading-7 text-background/70">
+        {language === "fr"
+          ? "Folley Group développe également ses activités en ligne à travers Folley Collection et Folley Tech."
+          : "Folley Group also operates online through Folley Collection and Folley Tech."}
+      </p>
+
+      <Link
+        to="/brands"
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+      >
+        {language === "fr"
+          ? "Découvrir nos marques"
+          : "Explore our brands"}
+
+        <ArrowRight className="size-4" />
+      </Link>
+    </div>
+  </div>
+  </ScrollReveal>
+</section>
+
+<section className="py-16 sm:py-20">
+<ScrollReveal direction="up">
+
+  <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-5 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
+    <div>
+      <Eyebrow>
+        {language === "fr"
+          ? "Besoin d’un service ?"
+          : "Need one of our services?"}
+      </Eyebrow>
+
+      <h2 className="mt-4 max-w-xl text-2xl font-semibold sm:text-3xl">
+        {language === "fr"
+          ? "Parlez-nous de votre besoin."
+          : "Tell us what you need."}
+      </h2>
+
+      <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
+        {language === "fr"
+          ? "Sélectionnez le service qui vous intéresse et envoyez votre demande à notre équipe."
+          : "Select the service you are interested in and send your enquiry to our team."}
+      </p>
+    </div>
+
+    <Button
+      asChild
+      className="h-11 w-fit rounded-sm px-6"
+    >
+      <Link to="/contact">
+        {language === "fr"
+          ? "Envoyer une demande"
+          : "Send an enquiry"}
+
+        <ArrowRight />
+      </Link>
+    </Button>
+  </div>
+  </ScrollReveal>
+</section>
+
+    </>
+  );
 }
 
-function PageIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
-  return <section className="border-b border-border bg-muted/35"><div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12"><Eyebrow>{eyebrow}</Eyebrow><h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.035em] sm:text-5xl">{title}</h1><p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">{description}</p></div></section>;
-}
+
+
 
 export function BusinessPage({ slug }: { slug: string }) {
   const { language } = useLanguage();
@@ -516,35 +555,21 @@ export function BusinessPage({ slug }: { slug: string }) {
   </>;
 }
 
-export function AboutPage() {
-  const { language } = useLanguage();
-  const c = (key: CopyKey) => text(language, key);
-  return <>
-    <PageIntro eyebrow="Folley Group" title={language === "fr" ? "Un groupe diversifié, une vision commune." : "A diversified group, united by a shared vision."} description={c("introText")} />
-    <section className="py-16 sm:py-24"><div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 md:grid-cols-2 md:items-center lg:px-12"><div className="relative"><img src={heroImage} alt="Goma and Lake Kivu, home to Folley Group" width={1600} height={960} loading="lazy" className="aspect-[1.2] w-full object-cover" /><span className="absolute bottom-0 left-0 bg-primary px-5 py-4 text-xs font-medium text-primary-foreground"><MapPin className="mr-2 inline size-4" />Goma, North Kivu · DRC</span></div><div><Eyebrow>{c("introLabel")}</Eyebrow><h2 className="mt-5 text-3xl font-semibold leading-tight">{c("introTitle")}</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">{c("introText")}</p><div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">{divisions.map((division) => <Link key={division.slug} to={divisionHref(division.slug)} className="flex items-center gap-2 border-b border-border py-3 hover:text-primary"><division.Icon className="size-4 shrink-0 text-primary" />{language === "fr" ? division.titleFr : division.title}</Link>)}</div></div></div></section>
-    <TrustStrip />
-    <section className="py-16 sm:py-24"><div className="mx-auto grid max-w-[1400px] gap-10 px-5 sm:px-8 md:grid-cols-[0.65fr_1.35fr] lg:px-12"><div><Eyebrow>{c("founderLabel")}</Eyebrow><p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{c("founderRole")}</p></div><div><h2 className="text-3xl font-semibold">{c("founderName")}</h2><p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">{c("founderText")}</p><blockquote className="mt-7 border-l-2 border-primary pl-5 text-sm italic text-foreground">“{c("founderQuote")}”</blockquote><div className="mt-7 flex flex-wrap gap-5"><a href="https://www.instagram.com/FolleyJC" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium"><Instagram className="size-4 text-primary" />Instagram</a><a href="https://x.com/folleyjc" target="_blank" rel="noreferrer" className="text-sm font-medium">X / Twitter <ArrowUpRight className="ml-1 inline size-3" /></a></div></div></div></section>
-    <MarketsSection /><ContactBand />
-  </>;
-}
 
-export function BrandsPage() {
-  const { language } = useLanguage();
-  const c = (key: CopyKey) => text(language, key);
-  return <><PageIntro eyebrow={c("brandsKicker")} title={c("brandsTitle")} description={c("brandsText")} /><BrandsPreview /><SocialLinks /><ContactBand /></>;
-}
+
 
 function SocialLinks() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
   const socials = [
-    { name: "Folley Group · Folley J.C.", url: "https://www.instagram.com/FolleyJC", handle: "@FolleyJC" },
-    { name: "Folley Collection", url: "https://www.instagram.com/folleycollection_", handle: "@folleycollection_" },
+    { name: "Folley Group · Folley J.C.", url: "https://www.instagram.com/folley_j_c?", handle: "@FolleyJC" },
+    { name: "Folley Collection", url: "https://www.instagram.com/folleycollection_/", handle: "@folleycollection_" },
     { name: "Folley Tech", url: "https://www.instagram.com/folleytech", handle: "@folleytech" },
   ];
   return <section className="bg-muted/35 py-16 sm:py-20"><div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12"><Eyebrow>{c("social")}</Eyebrow><div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><h2 className="text-3xl font-semibold">{c("social")}</h2><p className="text-sm text-muted-foreground">{c("socialText")}</p></div><div className="mt-8 grid border-l border-t border-border sm:grid-cols-3">{socials.map((social) => <a key={social.name} href={social.url} target="_blank" rel="noreferrer" className="flex items-center justify-between border-b border-r border-border p-5 transition-colors hover:bg-background"><span><span className="block text-sm font-semibold">{social.name}</span><span className="mt-1 block text-xs text-muted-foreground">{social.handle}</span></span><Instagram className="size-5 text-primary" /></a>)}</div></div></section>;
 }
 
+{/*
 export function PartnershipsPage() {
   const { language } = useLanguage();
   const c = (key: CopyKey) => text(language, key);
@@ -552,30 +577,356 @@ export function PartnershipsPage() {
   return <><PageIntro eyebrow={c("partnerLabel")} title={c("partnerTitle")} description={c("partnerText")} /><section className="py-16 sm:py-24"><div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 md:grid-cols-2 md:items-center lg:px-12"><div className="relative"><img src={logisticsImage} alt="Regional business partners collaborating on logistics" width={1200} height={800} loading="lazy" className="aspect-[1.2] w-full object-cover" /><span className="absolute bottom-0 left-0 bg-primary px-5 py-4 text-xs font-semibold text-primary-foreground">Folley Group · Partnerships</span></div><div><Eyebrow>{c("partnerships")}</Eyebrow><h2 className="mt-5 text-3xl font-semibold">{language === "fr" ? "Des partenariats concrets, tournés vers l’avenir." : "Practical partnerships with room to grow."}</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">{c("partnerText")}</p><ul className="mt-7">{opportunities.map((item) => <li key={item} className="flex items-center gap-3 border-t border-border py-4 text-sm"><Check className="size-4 text-primary" />{item}</li>)}</ul><Button asChild className="mt-6 h-11 rounded-sm px-5"><Link to="/contact">{c("partnerCta")}<ArrowRight /></Link></Button></div></div></section><MarketsSection /><ContactBand /></>;
 }
 
+*/}
+
+export function PartnershipsPage() {
+  return (
+    <ComingSoonPage
+      section="Partnerships"
+      sectionFr="Partenariats"
+    />
+  );
+}
+
 export function ContactPage() {
   const { language } = useLanguage();
+
+  const [formStatus, setFormStatus] = useState<
+  "idle" | "sending" | "success" | "error"
+>("idle");
+
+useEffect(() => {
+  if (formStatus !== "success") return;
+
+  const timer = window.setTimeout(() => {
+    setFormStatus("idle");
+  }, 20000);
+
+  return () => {
+    window.clearTimeout(timer);
+  };
+}, [formStatus]);
+
   const c = (key: CopyKey) => text(language, key);
-  const services = language === "fr"
-    ? ["Mobilité & voyages", "Immobilier & hôtellerie", "Technologie & télécoms", "Commerce & échanges", "Logistique & partenariats", "Partenariat d’affaires", "Folley Collection", "Folley Tech", "Demande générale"]
-    : ["Mobility & Travel", "Property & Hospitality", "Technology & Telecoms", "Trade & Commerce", "Logistics & Partnerships", "Business Partnership", "Folley Collection", "Folley Tech", "General Enquiry"];
-  function sendMessage(event: FormEvent<HTMLFormElement>) {
+
+  const services = [
+    ...divisions.map((division) =>
+      language === "fr"
+        ? division.titleFr
+        : division.title
+    ),
+    "Folley Collection",
+    "Folley Tech",
+    language === "fr"
+      ? "Demande de partenariat"
+      : "Partnership enquiry",
+    language === "fr"
+      ? "Demande générale"
+      : "General enquiry",
+  ];
+
+  async function sendMessage(
+    event: FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const subject = `${String(form.get("service"))} enquiry — ${String(form.get("name"))}`;
-    const body = [
-      `Name: ${String(form.get("name"))}`,
-      `Email: ${String(form.get("email"))}`,
-      `Phone: ${String(form.get("phone") || "Not provided")}`,
-      `Service: ${String(form.get("service"))}`,
-      "",
-      String(form.get("message")),
-    ].join("\n");
-    window.location.href = `mailto:rwanikajean@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
+  
+    const payload = {
+      name: String(form.get("name") || ""),
+      email: String(form.get("email") || ""),
+      phone: String(form.get("phone") || ""),
+      service: String(form.get("service") || ""),
+      message: String(form.get("message") || ""),
+    };
+  
+    setFormStatus("sending");
+  
+    try {
+      const response = await fetch("/api/send-contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(
+          result.error || "Unable to send message."
+        );
+      }
+  
+      formElement.reset();
+      setFormStatus("success");
+    } catch (error) {
+      console.error("Contact form error:", error);
+      setFormStatus("error");
+    }
   }
-  return <><PageIntro eyebrow={c("contact")} title={c("contactTitle")} description={c("contactText")} /><section className="py-16 sm:py-24"><div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] lg:px-12"><div><Eyebrow>{c("reachUs")}</Eyebrow><h2 className="mt-5 text-2xl font-semibold">{language === "fr" ? "Parlons de votre projet." : "Let's talk about your next step."}</h2><div className="mt-8 divide-y divide-border border-y border-border">{[
-    { Icon: Smartphone, label: language === "fr" ? "Téléphone / WhatsApp" : "Phone / WhatsApp", value: "+243 973 350 035", href: "tel:+243973350035" },
-    { Icon: Globe2, label: "Email", value: "rwanikajean@gmail.com", href: "mailto:rwanikajean@gmail.com" },
-    { Icon: MapPin, label: c("headquarters"), value: "Quartier Le Volcan, Goma, North Kivu, DRC", href: "https://maps.google.com/?q=Quartier+Le+Volcan+Goma" },
-  ].map(({ Icon, label, value, href }) => <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined} className="flex gap-4 py-5"><Icon className="mt-1 size-5 shrink-0 text-primary" /><span><span className="block text-xs text-muted-foreground">{label}</span><span className="mt-1 block text-sm font-medium">{value}</span></span></a>)}</div><a href="https://wa.me/243973350035" target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"><Headphones className="size-4" />{c("whatsapp")}<ArrowUpRight className="size-3.5" /></a><p className="mt-8 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">{c("markets")}</p><p className="mt-2 text-sm leading-6">DR Congo · Rwanda · Uganda · Burundi</p></div>
-    <form onSubmit={sendMessage} className="border border-border p-5 sm:p-8"><div className="grid gap-5 sm:grid-cols-2"><label className="grid gap-2 text-xs font-medium">{c("formName")}<Input name="name" autoComplete="name" required className="h-11 rounded-sm bg-background" /></label><label className="grid gap-2 text-xs font-medium">{c("formEmail")}<Input name="email" type="email" autoComplete="email" required className="h-11 rounded-sm bg-background" /></label><label className="grid gap-2 text-xs font-medium">{c("formPhone")}<Input name="phone" type="tel" autoComplete="tel" className="h-11 rounded-sm bg-background" /></label><label className="grid gap-2 text-xs font-medium">{c("formService")}<select name="service" required defaultValue="" className="h-11 w-full rounded-sm border border-input bg-background px-3 text-sm"><option value="" disabled>{c("choose")}</option>{services.map((service) => <option key={service}>{service}</option>)}</select></label><label className="grid gap-2 text-xs font-medium sm:col-span-2">{c("formMessage")}<Textarea name="message" required rows={5} placeholder={c("formPlaceholder")} className="resize-y rounded-sm bg-background" /></label></div><Button type="submit" className="mt-5 h-11 rounded-sm px-6">{c("formSend")}<ArrowRight /></Button><p className="mt-3 text-xs leading-5 text-muted-foreground">{c("formNote")}</p></form></div></section><SocialLinks /></>;
+  const whatsappMessage =
+    language === "fr"
+      ? "Bonjour Folley Group, je souhaite obtenir plus d’informations sur vos services."
+      : "Hello Folley Group, I would like more information about your services.";
+
+  return (
+    <>
+      <PageIntro
+        eyebrow={c("contact")}
+        title={c("contactTitle")}
+        description={c("contactText")}
+      />
+
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto grid max-w-[1400px] gap-12 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] lg:px-12">
+
+          {/* Contact information */}
+          <div>
+            <Eyebrow>{c("reachUs")}</Eyebrow>
+
+            <h2 className="mt-5 text-2xl font-semibold">
+              {language === "fr"
+                ? "Comment pouvons-nous vous aider ?"
+                : "How can we help?"}
+            </h2>
+
+            <p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">
+              {language === "fr"
+                ? "Contactez Folley Group pour nos services, nos boutiques en ligne, nos partenariats ou toute demande générale."
+                : "Contact Folley Group about our services, online shops, partnerships or general enquiries."}
+            </p>
+
+            <div className="mt-8 divide-y divide-border border-y border-border">
+              <a
+                href="tel:+256789402828"
+                className="flex gap-4 py-5"
+              >
+                <Smartphone className="mt-1 size-5 shrink-0 text-primary" />
+
+                <span>
+                  <span className="block text-xs text-muted-foreground">
+                    {language === "fr"
+                      ? "Téléphone"
+                      : "Phone"}
+                  </span>
+
+                  <span className="mt-1 block text-sm font-medium">
+                     +256 789 402828
+                  </span>
+                </span>
+              </a>
+
+              <a
+                href="mailto:rwanikajean@gmail.com"
+                className="flex gap-4 py-5"
+              >
+                <Globe2 className="mt-1 size-5 shrink-0 text-primary" />
+
+                <span>
+                  <span className="block text-xs text-muted-foreground">
+                    Email
+                  </span>
+
+                  <span className="mt-1 block text-sm font-medium">
+                    rwanikajean@gmail.com
+                  </span>
+                </span>
+              </a>
+
+              <a
+                href="https://maps.google.com/?q=Quartier+Le+Volcan+Goma"
+                target="_blank"
+                rel="noreferrer"
+                className="flex gap-4 py-5"
+              >
+                <MapPin className="mt-1 size-5 shrink-0 text-primary" />
+
+                <span>
+                  <span className="block text-xs text-muted-foreground">
+                    {c("headquarters")}
+                  </span>
+
+                  <span className="mt-1 block text-sm font-medium">
+                    Quartier Le Volcan, Goma
+                    <br />
+                    {language === "fr"
+                      ? "Nord-Kivu, RD Congo"
+                      : "North Kivu, DR Congo"}
+                  </span>
+                </span>
+              </a>
+            </div>
+
+            <a
+              href={`https://wa.me/256789402828?text=${encodeURIComponent(
+                whatsappMessage
+              )}`}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+            >
+              <Headphones className="size-4" />
+
+              {language === "fr"
+                ? "Nous contacter sur WhatsApp"
+                : "Contact us on WhatsApp"}
+
+              <ArrowUpRight className="size-3.5" />
+            </a>
+
+            <div className="mt-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                {c("markets")}
+              </p>
+
+              <p className="mt-2 text-sm leading-6">
+                DR Congo · Rwanda · Uganda · Burundi
+              </p>
+            </div>
+          </div>
+
+          {/* Enquiry form */}
+          <form
+            onSubmit={sendMessage}
+            className="border border-border p-5 sm:p-8"
+          >
+            <div className="mb-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-primary">
+                {language === "fr"
+                  ? "Envoyer une demande"
+                  : "Send an enquiry"}
+              </p>
+
+              <h2 className="mt-3 text-2xl font-semibold">
+                {language === "fr"
+                  ? "Parlez-nous de votre besoin."
+                  : "Tell us what you need."}
+              </h2>
+
+              <p className="mt-3 max-w-lg text-sm leading-6 text-muted-foreground">
+                {language === "fr"
+                  ? "Sélectionnez le service qui vous intéresse et envoyez-nous votre message."
+                  : "Select the service you are interested in and send us your message."}
+              </p>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <label className="grid gap-2 text-xs font-medium">
+                {c("formName")}
+
+                <Input
+                  name="name"
+                  autoComplete="name"
+                  required
+                  className="h-11 rounded-sm bg-background"
+                />
+              </label>
+
+              <label className="grid gap-2 text-xs font-medium">
+                {c("formEmail")}
+
+                <Input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="h-11 rounded-sm bg-background"
+                />
+              </label>
+
+              <label className="grid gap-2 text-xs font-medium">
+                {c("formPhone")}
+
+                <Input
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  className="h-11 rounded-sm bg-background"
+                />
+              </label>
+
+              <label className="grid gap-2 text-xs font-medium">
+                {c("formService")}
+
+                <select
+                  name="service"
+                  required
+                  defaultValue=""
+                  className="h-11 w-full rounded-sm border border-input bg-background px-3 text-sm"
+                >
+                  <option value="" disabled>
+                    {c("choose")}
+                  </option>
+
+                  {services.map((service) => (
+                    <option
+                      key={service}
+                      value={service}
+                    >
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="grid gap-2 text-xs font-medium sm:col-span-2">
+                {c("formMessage")}
+
+                <Textarea
+                  name="message"
+                  required
+                  rows={6}
+                  placeholder={c("formPlaceholder")}
+                  className="resize-y rounded-sm bg-background"
+                />
+              </label>
+            </div>
+
+            <Button
+  type="submit"
+  disabled={formStatus === "sending"}
+  className="mt-6 h-11 rounded-sm px-6"
+>
+  {formStatus === "sending"
+    ? language === "fr"
+      ? "Envoi..."
+      : "Sending..."
+    : c("formSend")}
+
+  {formStatus !== "sending" && <ArrowRight />}
+</Button>
+
+{formStatus === "success" && (
+  <div
+    role="status"
+    className="mt-4 border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary"
+  >
+    {language === "fr"
+      ? "Merci. Votre message a été envoyé avec succès. Notre équipe vous répondra dès que possible."
+      : "Thank you. Your message has been sent successfully. Our team will get back to you as soon as possible."}
+  </div>
+)}
+
+{formStatus === "error" && (
+  <div
+    role="alert"
+    className="mt-4 border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive"
+  >
+    {language === "fr"
+      ? "Une erreur s’est produite lors de l’envoi de votre message. Veuillez réessayer."
+      : "We couldn't send your message. Please try again."}
+  </div>
+)}
+
+            
+          </form>
+        </div>
+      </section>
+
+      <SocialLinks />
+    </>
+  );
 }
