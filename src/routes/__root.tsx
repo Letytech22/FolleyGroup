@@ -8,10 +8,11 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode , useState, useEffect} from "react";
 
 import appCss from "../styles.css?url";
 import { FolleySiteShell } from "@/components/folley/layout/FolleySiteShell";
+import { Preloader } from "@/components/folley/layout/Preloader";
 
 function NotFoundComponent() {
   return (
@@ -162,15 +163,79 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+
+const MAINTENANCE_MODE = true;
+
+function MaintenancePage() {
+  const year = new Date().getFullYear();
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#f8f7f4] px-6 py-12 text-[#272727]">
+      <div className="w-full max-w-xl text-center">
+        <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-[#e8e3d8]">
+          <span className="text-3xl">⚒</span>
+        </div>
+
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-[#178f63]">
+          FOLLEY GROUP
+        </p>
+
+        <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
+          Website Temporarily Unavailable
+        </h1>
+
+        <p className="mx-auto max-w-md text-lg leading-relaxed text-[#666]">
+          The Folley Group website is currently undergoing maintenance.
+          We apologize for any inconvenience and appreciate your understanding.
+        </p>
+
+        <div className="mx-auto my-10 h-px w-20 bg-[#c5b59c]" />
+
+        <p className="text-sm text-[#777]">
+          Please check back later.
+        </p>
+
+        <p className="mt-12 text-xs text-[#999]">
+          © {year} Folley Group. All rights reserved.
+        </p>
+      </div>
+    </main>
+  );
+}
+
+
+{/*
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      {/*
       <FolleySiteShell>
         <Outlet />
       </FolleySiteShell>
     </QueryClientProvider>
   );
 }
+
+*/}
+
+
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  if (MAINTENANCE_MODE) {
+    return <MaintenancePage />;
+  }
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <FolleySiteShell>
+        <Outlet />
+      </FolleySiteShell>
+    </QueryClientProvider>
+  );
+}
+
+

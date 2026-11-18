@@ -126,9 +126,9 @@ export function Footer() {
 
       {/* Bottom */}
       <div className="mx-auto flex max-w-[1400px] flex-col gap-2 border-t border-background/15 px-5 py-5 text-xs text-background/50 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
-        <span>
-          © 2026 Folley Group. {c("copyright")}
-        </span>
+      <span>
+  © {new Date().getFullYear()} Folley Group. {c("copyright")}
+</span>
 
         <span>
           DR Congo · Rwanda · Uganda · Burundi

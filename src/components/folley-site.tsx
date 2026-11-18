@@ -579,14 +579,6 @@ export function PartnershipsPage() {
 
 */}
 
-export function PartnershipsPage() {
-  return (
-    <ComingSoonPage
-      section="Partnerships"
-      sectionFr="Partenariats"
-    />
-  );
-}
 
 export function ContactPage() {
   const { language } = useLanguage();
